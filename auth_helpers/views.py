@@ -5,6 +5,13 @@ from django.shortcuts import render
 from django.utils.http import urlquote
 
 
+def user_in_group(user, group_name):
+    if not user.is_authenticated():
+        return False
+    group = Group.objects.get(name=group_name)
+    return group in user.groups.all()
+
+
 class GroupRequiredMixin(object):
 
     """A mixin that requires the user is a member of a particular group
